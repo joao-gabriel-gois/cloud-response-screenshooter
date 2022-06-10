@@ -1,4 +1,6 @@
 node_modules/
 .env
 yarn.lock
-tmp/*
+yarn-error.log
+tmp/*.png
+dist/*

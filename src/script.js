@@ -1,15 +1,13 @@
-import { fileURLToPath } from 'url'
-import { resolve, dirname } from 'path';
-import puppeteer from 'puppeteer'
+import path from 'path';
+import puppeteer from 'puppeteer';
 
-
+import { getCurrentDirname } from './utils/path.js';
 import S3StorageProvider from './providers/S3StorageProvider.js';
 
+
+const __dirname = getCurrentDirname(import.meta.url);
+
 const s3Storage = new S3StorageProvider();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 
 export const script  = async (url) => {
   let browser, page;
@@ -32,7 +30,7 @@ export const script  = async (url) => {
     await page.goto(url);
 ;
     await page.screenshot({
-      path: resolve(__dirname, '..', 'tmp', `image-sample-${serviceName}.png`)
+      path: path.resolve(__dirname, '..', 'tmp', `image-sample-${serviceName}.png`)
     });
   }
   catch(e) {

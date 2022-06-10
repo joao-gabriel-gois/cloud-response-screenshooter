@@ -1,13 +1,12 @@
 import 'dotenv/config';
-import { resolve, dirname} from 'path';
+import path from 'path';
 import fs from 'fs';
 import mime from 'mime';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
-import { fileURLToPath } from 'url';
+import { getCurrentDirname } from '../utils/path.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = getCurrentDirname(import.meta.url);
 
 
 export default class S3StorageProvider {
@@ -18,20 +17,31 @@ export default class S3StorageProvider {
   }
 
   async save(file) {    
-    const originalName = resolve(__dirname,'..', '..', 'tmp', file);
+    const originalName = path.resolve(__dirname,'..', '..', 'tmp', file);
     const fileContent = await fs.promises.readFile(originalName);
     const ContentType = mime.getType(originalName) || undefined;
 
-    await this.client.send(new PutObjectCommand({
-      Bucket: process.env.AWS_BUCKET,
-      Key: file,
-      ACL: 'public-read',
-      Body: fileContent,
-      ContentType,
-    }));
+    try {
+      await this.client.send(new PutObjectCommand({
+        Bucket: process.env.AWS_BUCKET,
+        Key: file,
+        ACL: 'public-read',
+        Body: fileContent,
+        ContentType,
+      }));
+    }
+    catch(e) {
+      console.error("Error: Not able save the screenshot", e);
+      throw new Error('[my-cli-browser] AWS S3 Error', e);
+    }
 
-    await fs.promises.unlink(originalName);
+    try {
+      await fs.promises.unlink(originalName);
+    }
+    catch(e) {
+      console.error("Error: Not able delete screenshot file from /tmp directory (in disk)", e);
+      throw new Error('[my-cli-browser] AWS S3 Error', e);
+    }
 
-    return file;
   }
 }
