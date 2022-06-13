@@ -6,6 +6,6 @@ import { app } from './app.js';
 
 export default () => {
   app.listen(process.env.PORT, () => {
-    console.log("[my-cli-browser] Started! Running on:", process.env.PORT);
+    console.log("[my-cli-browser] Started! Running...");
   });
 }
