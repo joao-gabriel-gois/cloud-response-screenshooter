@@ -45,8 +45,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/app/my-cli-browser
-            yarn
+            yarn add global pm2
             yarn build
-            yarn start
-            pm2 restart my-cli-browser
+            node ecosystem.config.js
   
