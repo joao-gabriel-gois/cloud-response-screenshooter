@@ -4,7 +4,7 @@ module.exports = {
   apps : [
     {
       name: "my-cli-browser",
-      script: "node ~/my-cli-browser/dist/main.cjs",
+      script: "node ~/my-cli-browser/dist/main.js",
       watch: true,
       instance_var: "MY_CLI_BROWSER",
       env: {
