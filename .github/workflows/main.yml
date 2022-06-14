@@ -34,7 +34,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           source: "., !node_modules"
-          target: "~/app/my-cli-browser"
+          target: "/home/ubuntu/my-cli-browser"
           
       - name: Updating and Setting up pm2 ecosystem
         uses: appleboy/ssh-action@master
@@ -44,9 +44,10 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/app/my-cli-browser
-            yarn
+            cd /home/ubuntu/my-cli-browser
+            sudo apt update && sudo apt upgrade -y
+            sudo apt install chromium-browser
+            sudo npm install -g pm2
+            sudo apt autoremove
             yarn build
-            yarn start
-            pm2 restart my-cli-browser
-  
+            yarn start:ecosys
