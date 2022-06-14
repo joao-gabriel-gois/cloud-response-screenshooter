@@ -34,7 +34,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           source: "., !node_modules"
-          target: "~/app/my-cli-browser"
+          target: "~/my-cli-browser"
           
       - name: Updating and Setting up pm2 ecosystem
         uses: appleboy/ssh-action@master
