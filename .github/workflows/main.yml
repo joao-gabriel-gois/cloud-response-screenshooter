@@ -44,8 +44,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/app/my-cli-browser
-            yarn add global pm2
+            cd ~/my-cli-browser
             yarn build
-            node ecosystem.config.js
+            yarn start:ecosys
   
