@@ -45,6 +45,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /home/ubuntu/my-cli-browser
+            echo ${{ secrets.SSH_HOST }}
+            echo ${{ secrets.SSH_USER }}
+            echo ${{ secrets.SSH_PORT }}
+            echo ${{ secrets.SSH_KEY }}
             yarn build
             yarn start:ecosys
   
