@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node dist/main.cjs",
+    "start": "node ./dist/main.cjs",
     "webpack": "./node_modules/webpack-cli/bin/cli.js",
     "build": "yarn webpack build",
     "start:ecosys": "node ecosystem.config.cjs"

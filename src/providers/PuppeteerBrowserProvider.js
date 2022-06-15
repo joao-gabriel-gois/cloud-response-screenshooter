@@ -14,7 +14,10 @@ export default class PuppeteerBrowserProvider {
   async launch() {
     if (!this.browser) {
       try {
-        this.browser = await puppeteer.launch();
+        this.browser = await puppeteer.launch({
+          headless: true,
+          args: ['--no-sandbox'],
+        });
       }
       catch(e) {
         console.error('[my-cli-browser] Error: Not able to launch browser', e);
