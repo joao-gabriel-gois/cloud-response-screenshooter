@@ -16,6 +16,26 @@ export default class S3StorageProvider {
     });
   }
 
+  /**
+    Need to implement a function to get file from S3 and return a specific value
+    if file doesn't exists , in that case we can take different action
+  */
+
+  // async get(file) {
+  //   try {
+  //     await this.client.get({
+  //       Bucket: process.env.AWS_BUCKET,
+  //       Key: file,
+  //       ACL: 'public-read',
+  //       Body: fileContent,
+  //       ContentType,
+  //     });
+  //   }
+  //   catch(e) {
+  //     console.log(e);
+  //   }
+  // }
+
   async save(file) {    
     const originalName = path.resolve(__dirname,'..', '..', 'tmp', file);
     const fileContent = await fs.promises.readFile(originalName);

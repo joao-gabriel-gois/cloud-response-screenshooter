@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 if [[ $1 == "up" ]];then
   docker build -t $2 .
   docker run --name $2 -p $3:$3 $2
@@ -9,7 +10,6 @@ if [[ $1 == "start" ]];then
   docker start $2
 fi
 
-
 if [[ $1 == "stop"  ]];then
   docker stop $2
 fi
@@ -17,4 +17,3 @@ fi
 if [[ $1 == "down"  ]];then
   docker stop $2 && docker rm $2 && docker builder prune -a
 fi
-

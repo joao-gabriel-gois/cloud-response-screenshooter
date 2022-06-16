@@ -1,5 +1,5 @@
 require('dotenv').config();
-// ecosystem for pm2 
+// ecosystem for pm2, obsolete by now, it will probabbly be used to run docker instead of entry script
 module.exports = {
   apps : [
     {

@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
 on:
@@ -20,10 +18,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-
-      - name: Creating apps folder
-        run: mkdir ~/my-cli-browser
-                  
+          
+      - name: Install Dependencies
+        run: yarn
+        
+      - name: Build
+        run: yarn build
+        
       - uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -32,13 +33,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: "./, !node_modules"
           target: "~/my-cli-browser"
-      
-      - name: Install Dependencies
-        run: yarn
-        
-      - name: Build
-        run: yarn build
-
           
       - name: Updating and Setting up pm2 ecosystem
         uses: appleboy/ssh-action@master
@@ -48,17 +42,17 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo apt update
-            sudo apt upgrade -y
-            sudo apt install -y apt-transport-https ca-certificates
-            sudo apt install -y curl software-properties-common
-            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-            sudo apt update
-            sudo apt install docker-ce
-            mkdir -p ~/.docker/cli-plugins/
-            curl -SL https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
-            chmod +x ~/.docker/cli-plugins/docker-compose
             cd /home/ubuntu/my-cli-browser
-            sudo docker-compose build
-            sudo docker run --name my-cli-browser -p 3333:3333 my-cli-browser
+            npm run build
+            npm run start
+#   sudo apt update
+#   sudo apt upgrade -y
+#   sudo apt install -y apt-transport-https ca-certificates
+#   sudo apt install -y curl software-properties-common
+#   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+#   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+#   sudo apt update
+#   sudo apt install docker-ce
+# # my simple composer
+#   sudo docker-compose build
+#   sudo docker run --name my-cli-browser -p 3333:3333 my-cli-browser
