@@ -43,6 +43,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /home/ubuntu/my-cli-browser
+            npm install
             npm run build
             npm run start
 #   sudo apt update
