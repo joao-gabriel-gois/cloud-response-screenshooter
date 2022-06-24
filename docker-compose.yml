@@ -6,6 +6,6 @@ services:
     container_name: my-cli-browser
     restart: always
     ports:
-      - '3333:3333'
+      - 3333:3333
     volumes:
       - .:/home/ubuntu/my-cli-browser
