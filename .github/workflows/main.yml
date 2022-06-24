@@ -60,6 +60,5 @@ jobs:
             cd /home/ubuntu/my-cli-browser
             sudo npm install -g npm
             npm install
-            sudo docker-compose up --build
-            sudo systemctl restart nginx
+            sudo docker-compose up --build -d
             
