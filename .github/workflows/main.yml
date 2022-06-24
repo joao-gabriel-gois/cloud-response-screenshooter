@@ -58,7 +58,8 @@ jobs:
               sudo apt autoremove -y
             fi
             cd /home/ubuntu/my-cli-browser
-            npm install -g npm
+            sudo npm install -g npm
             npm install
             sudo docker-compose up --build -d
+            sudo systemctl restart nginx
             
