@@ -9,6 +9,7 @@ export const GetUrlScreenshotController = () => {
     
     const serviceName = getServiceName(url);
     const S3_BASE_URL = process.env.AWS_BUCKET_URL;
+    console.log("[my-cli-browser] Request received: ", request);
 
     try {
       await getUrlScreenshotUseCase.execute(url);
