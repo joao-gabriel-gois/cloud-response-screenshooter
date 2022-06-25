@@ -22,7 +22,7 @@ export default class PuppeteerBrowserProvider {
       }
       catch(e) {
         // console.error('[my-cli-browser] Error: Not able to launch browser', e);
-        throw new Error('[my-cli-browser] Error: Not able to launch browser', e);
+        throw new Error('Not able to launch browser', e);
       }
     }
   }
@@ -36,7 +36,7 @@ export default class PuppeteerBrowserProvider {
       }
       catch(e) {
         // console.error('[my-cli-browser] Error while closing browser:', e);
-        throw new Error('[my-cli-browser] Error while closing browser', e);  
+        throw new Error('Failed to close the browser', e);  
       }
     }
   }
@@ -44,7 +44,7 @@ export default class PuppeteerBrowserProvider {
   async takeScreenshot(url) {
     if (!this.browser) {
       // console.error('[my-cli-browser] Error: No browser running!');
-      throw new Error('[my-cli-browser] Error: No browser running!');
+      throw new Error('No browser running!');
     }
    
     try {
@@ -53,7 +53,7 @@ export default class PuppeteerBrowserProvider {
     }
     catch(e) {
       // console.error('[my-cli-browser] Error: Not able to create new page', e);
-      throw new Error('[my-cli-browser] Error: Not able create new page', e);
+      throw new Error('Not able create new page', e);
     }
 
     const serviceName = getServiceName(url);
@@ -62,7 +62,7 @@ export default class PuppeteerBrowserProvider {
     try { await this.page.goto(url) }
     catch(e) {
       // console.error(`[my-cli-browser] Error: Not able to got to url ${url}`, e);
-      throw new Error(`[my-cli-browser] Error: Not able to go to url ${url}`, e);
+      throw new Error(`Not able to go to url ${url}`, e);
     }
     
     try {
@@ -72,7 +72,7 @@ export default class PuppeteerBrowserProvider {
     }
     catch(e) {
       // console.error('[my-cli-browser] Error: could not take screenshot', e);
-      throw new Error('[my-cli-browser] Error: could not take screenshot', e);
+      throw new Error('Could not take screenshot', e);
     }
   }
 }
