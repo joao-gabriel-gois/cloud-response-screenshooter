@@ -5,6 +5,6 @@ import { GetUrlScreenshotController } from "../useCases/GetUrlScreenshotControll
 const getUrlScreenshotController = GetUrlScreenshotController();
 
 const app = express();
-app.get('/get-screenshot/:url', getUrlScreenshotController.store);
+app.get('/:url', getUrlScreenshotController.store);
 
 export { app };

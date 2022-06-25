@@ -4,3 +4,7 @@ yarn.lock
 yarn-error.log
 tmp/*.png
 dist/*
+
+deploy/ecosystem.config.cjs
+deploy/my_simple_docker_composer
+docker_c

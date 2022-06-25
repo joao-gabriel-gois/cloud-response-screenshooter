@@ -9,15 +9,31 @@
   **Possible new features**:
 
   * Next upgrades can bring more detail about response, but for first approach screenshot fulfilled our needs
-  * Once it is already set for handling as brow
+  * Once it is already set for handling as browser, any other web scrapping / exploratory features could be added in new routes, all setup for CI, chromium install and other AWS deploy config is set already.
 
 ### GitHub Actions
 * This simple API project became useful to test some simple CI workflows, mainly for study purpose
 * Anyway, for this API specifically it was useful once we need lower-level dependencies (outside package.json), such as Chromium
 * Any new feature in future, though, can take vantage of the fact that workflow is already set
+* <u>This CI flow is ready and working already, but there is a few previous steps before running it on ec2 instances</u>. <strong>Check build topic bellow</strong>
+
+### Building
+* To run this CI flow, first is necessary to set env variables in github actions, like: `SSH_HOST`, `SSH_USER`, `SSH_PORT` and `SSH_KEY`
+* Make sure you have correctly set the private key on github actions and added the .pub version of it in authorized_keys file in ec2 instance
+* Set up reverse proxy with NGINX to redirect requests coming to 80/443 ports to the port your docker service is running
+* After that, copy your vesion of .env file (of node project, check `.example.env` file to create a proper .env one) in `/root/.my_env/` with the following commands:
+  ```(bash)
+  scp -i <aws-cert-file>.pem ~/<path/to>/.env <user>@<ec2-ip-or-domain>:.env
+  ssh -i <aws-cert-file>.pem <user>@<ec2-ip-or-domain>
+  # once logged in, do the following:
+  sudo mkdir /root/.my_env
+  sudo mv ~/.env /root/.my_env
+  exit
+  ```
+* Now you can finally push your branch to main and the CI flow will work as expected.
 
 ### Tech Decisions:
-* As it is a very simple project, Puppeteer and Amazon SDK (for S3 integration) as main logic provider, Express for WebServer and NGINX for reversed proxy on AWS EC2 side fulfilled the needs
+* As it is a very simple project, Puppeteer and Amazon SDK (for S3 integration) as main logic 3r party providers, Express for WebServer, docker and NGINX for reversed proxy on AWS EC2 side fulfilled the needs
 --- 
 ## API Reference
   * **Routes**:
@@ -38,6 +54,6 @@
       ```
       {
         "updated": false,
-        "reason": "[my-cli-browser] Error: Not able to go to url https://google.fake.com"
+        "reason": "Error: Not able to go to url https://google.fake.com"
       }
       ```  
