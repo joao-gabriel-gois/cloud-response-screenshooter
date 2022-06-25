@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main, adding-docker ]
+    branches: [ main ]
 
   workflow_dispatch:
 
