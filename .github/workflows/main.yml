@@ -73,7 +73,7 @@ jobs:
             fi
             cd /home/ubuntu/my-cli-browser
             sudo cp /root/.my_env/.env .env
-            npm install -g npm
+            npm install --location=global npm
             npm install
             sudo systemctl restart docker.service
             sudo systemctl restart containerd.service
