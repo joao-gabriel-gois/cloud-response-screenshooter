@@ -5,6 +5,9 @@ import { GetUrlScreenshotController } from "../useCases/GetUrlScreenshotControll
 const getUrlScreenshotController = GetUrlScreenshotController();
 
 const app = express();
+
+//app.get('/media/*', );
+
 app.get('/:url', getUrlScreenshotController.store);
 
 export { app };

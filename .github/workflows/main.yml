@@ -80,4 +80,3 @@ jobs:
             sudo systemctl restart nginx.service
             sleep 2
             sudo docker compose up --build -d
-            
