@@ -19,42 +19,31 @@ export const S3StorageProvider = (axiosClient = s3AxiosClient) => {
   const client = new S3Client({
     region: process.env.AWS_BUCKET_REGION,
   });
-  
-  // PUBLIC
-  async function get(file) {
-    return await axiosClient.get(file);
-  }
 
-  async function checkAndSave(file, expiryTimeInSeconds =  3 * 7 * 24 * 60 * 60) {// 3 weeks as default expiry time  
+  // Public
+  async function shouldSalve(file, expiryTimeInSeconds) {
     let isExpired = false;
-    // Check if s3 fili is there already, if not, it will put there
+  
     try {
-      const s3Response = await this.get(file);
+      const s3Response = await get(file);
 
       const lastModified = new Date(s3Response.headers["last-modified"]).getTime();
       isExpired = new Date().getTime() / 1000 - lastModified > expiryTimeInSeconds; // modified more than 3 weeks ago?
-      
-      if (!isExpired) await unlinkLocalCopy(file);
-      
-      console.log(
-        "Last Modified X Today",
-        new Date(lastModified).toISOString(),
-        `X ${(new Date()).toISOString()}`,
-        "\nIs Expired?",
-        isExpired
-      );
+      // console.log(
+      //   "Last Modified X Today",
+      //   new Date(lastModified).toISOString(),
+      //   `X ${(new Date()).toISOString()}`,
+      //   "\nIs Expired?",
+      //   isExpired
+      // );
     }
     catch { 
-      await save(file);
-      return true;
+      isExpired = true;
     }
-
-    if (isExpired) await save(file);
+    
     return isExpired;
-  }
+  } 
 
-
-  // PRIVATE
   async function save(file) {
     const fileContent = await fs.promises.readFile(getOriginalName(file));
     const ContentType = mime.getType(getOriginalName(file)) || undefined;
@@ -76,6 +65,11 @@ export const S3StorageProvider = (axiosClient = s3AxiosClient) => {
     await unlinkLocalCopy(file);
   }
 
+  // Private
+  async function get(file) {
+    return await axiosClient.get(file);
+  }
+
   async function unlinkLocalCopy(file) {    
     try {
       await fs.promises.unlink(getOriginalName(file));
@@ -92,8 +86,7 @@ export const S3StorageProvider = (axiosClient = s3AxiosClient) => {
 
 
   return {
-    get,
-    checkAndSave,
+    shouldSalve,
+    save,
   }
-
 }
