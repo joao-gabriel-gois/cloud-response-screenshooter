@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HAS_RSA_SET=$(cat /etc/ssh/sshd_config | grep "PubkeyAcceptedKeyTypes=+ssh-rsa")
+HAS_RSA_SET=$(sudo cat /etc/ssh/sshd_config | grep "PubkeyAcceptedKeyTypes=+ssh-rsa")
 
 if [[ $HAS_RSA_SET == "" ]]; then
   echo "PubkeyAcceptedKeyTypes=+ssh-rsa" >> /etc/ssh/sshd_config

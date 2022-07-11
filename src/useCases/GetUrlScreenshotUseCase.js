@@ -12,7 +12,7 @@ export const GetUrlScreenshotUseCase = (storage = s3Storage) => {
   const execute = async (url) => {
     // Need to update useCase to stop returning a boolean to controller
     const serviceName = getServiceName(url);
-    const shouldSave = storage.shouldSalve(
+    const shouldSave = await storage.shouldSalve(
       `image-sample-${serviceName}.png`,
       IMAGE_VERSION_TTL_IN_SECONDS
     );
