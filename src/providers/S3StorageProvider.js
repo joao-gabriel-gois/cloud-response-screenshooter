@@ -28,7 +28,7 @@ export const S3StorageProvider = (axiosClient = s3AxiosClient) => {
       const s3Response = await get(file);
 
       const lastModified = new Date(s3Response.headers["last-modified"]).getTime();
-      isExpired = new Date().getTime() / 1000 - lastModified > expiryTimeInSeconds; // modified more than 3 weeks ago?
+      isExpired = (new Date().getTime() - lastModified) / 1000 > expiryTimeInSeconds; // modified more than 3 weeks ago?
       // console.log(
       //   "Last Modified X Today",
       //   new Date(lastModified).toISOString(),
