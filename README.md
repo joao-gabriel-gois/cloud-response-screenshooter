@@ -3,17 +3,15 @@
 ##### _Simple Rest API project to test websites behavior once called by a cloud provider_ 
 ---
 ### Current Version:
-* It was required in work to test one costumer endpoint when called by a cloud provider to check its response
-* To fullfil it properly, simpler way was to take a screenshot of the home screen
+* It was required in work to test one costumer endpoint when called by a cloud provider to check its response.
+* I personally was challenged to proove to non-tech folks that customer's endpoint was returning 403 (Forbidden).
+* To fullfil it properly, simpler way was to take a screenshot of the home screen, like bellow:
 
-  **Possible new features**:
-
-  * Next upgrades can bring more detail about response, but for first approach screenshot fulfilled our needs
-  * Once it is already set for handling as browser, any other web scrapping / exploratory features could be added in new routes, all setup for CI, chromium install and other AWS deploy config is set already.
+  <img style="width:100%" src="https://suporte.hostgator.com.br/hc/article_attachments/30815023887507"></img>
 
 ### GitHub Actions
 * This simple API project became useful to test some simple CI workflows, mainly for study purpose
-* Anyway, for this API specifically it was useful once we need lower-level dependencies (outside package.json), such as Chromium
+* Anyway, for this API specifically it was useful once we need lower-level dependencies (outside package.json), such as Chromium for puppeteer
 * Any new feature in future, though, can take vantage of the fact that workflow is already set
 * <u>This CI flow is ready and working already, but there is a few previous steps before running it on ec2 instances</u>. <strong>Check build topic bellow</strong>
 
@@ -41,13 +39,13 @@
     ```
     GET /:url HTTP/1.1
 
-    curl https://my-cli-browser.buzzybit.com/google.com
+    curl https://<base-URL>/google.com
     ```
     * Response (*successful case*) :
       ```(json)
         {
           "updated": true,
-          "img_url": "https://aws-serpro-tests-screenshots.s3.sa-east-1.amazonaws.com/image-sample-google-com.png"
+          "img_url": "https://<bucket-name>.s3.sa-east-1.amazonaws.com/image-sample-google-com.png"
         }
       ```
     * Response (*exception case*):
