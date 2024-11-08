@@ -1,4 +1,4 @@
-# My CLI Browser
+# Cloud-Response Screenshooter
 
 ##### _Simple Rest API project to test websites behavior once called by a cloud provider_ 
 ---
